@@ -1,12 +1,12 @@
 package com.jpa.entity;
 
 import com.jpa.constant.ItemStatus;
+import com.jpa.entity.embedded.DateInfo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "ITEM")
@@ -31,9 +31,6 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private ItemStatus status;
 
-    @Column(name = "reg_date")
-    private Date regDate;
-
-    @Column(name = "mod_date")
-    private Date modDate;
+    @Embedded
+    private DateInfo dateInfo;
 }
