@@ -1,6 +1,6 @@
-package com.jpa.repository;
+package com.jpa.item.repository;
 
-import com.jpa.entity.Item;
+import com.jpa.item.domain.entity.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,8 +1,8 @@
 package com.jpa.member.controller;
 
-import com.jpa.member.dto.MemberDto;
-import com.jpa.member.entity.Member;
-import com.jpa.member.model.MemberModel;
+import com.jpa.member.domain.dto.MemberDto;
+import com.jpa.member.domain.entity.Member;
+import com.jpa.member.domain.model.MemberModel;
 import com.jpa.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

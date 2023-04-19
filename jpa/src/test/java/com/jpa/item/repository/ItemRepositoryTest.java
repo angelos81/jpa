@@ -1,8 +1,7 @@
-package com.jpa.repository;
+package com.jpa.item.repository;
 
 import com.jpa.constant.ItemStatus;
-import com.jpa.entity.Item;
-import com.jpa.entity.embedded.DateInfo;
+import com.jpa.item.domain.entity.Item;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
@@ -45,7 +44,7 @@ class ItemRepositoryTest {
             item.setStock(randomInt);
             item.setDesc("상품 준비중 입니다.");
             item.setStatus(ItemStatus.SELL);
-            item.setDateInfo(new DateInfo(new Date(), null));
+            item.setRegDate(LocalDateTime.now());
             itemRepository.save(item);
         }
     }
@@ -60,7 +59,7 @@ class ItemRepositoryTest {
         item.setStock(99);
         item.setDesc("테스트 상품 입니다.");
         item.setStatus(ItemStatus.SELL);
-        item.setDateInfo(new DateInfo(new Date(), null));
+        item.setRegDate(LocalDateTime.now());
 
         // when
         Item resultItem = itemRepository.save(item);

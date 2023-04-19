@@ -1,17 +1,20 @@
-package com.jpa.entity;
+package com.jpa.item.domain.entity;
 
+import com.jpa.common.domain.DateInfo;
 import com.jpa.constant.ItemStatus;
-import com.jpa.entity.embedded.DateInfo;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ITEM")
-@Setter
 @Getter
+@Setter
+@NoArgsConstructor
 @ToString
 public class Item {
     @Id
@@ -27,6 +30,15 @@ public class Item {
     private Integer stock;
 
     private String desc;
+
+    public Item(String name, Integer price, Integer stock, String desc) {
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+        this.desc = desc;
+        this.status = ItemStatus.SELL;
+        this.dateInfo = new DateInfo(LocalDateTime.now(), null);
+    }
 
     @Enumerated(EnumType.STRING)
     private ItemStatus status;

@@ -1,20 +1,27 @@
-package com.jpa.entity.embedded;
+package com.jpa.common.domain;
+
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
 @Embeddable
+@Setter
+@NoArgsConstructor
+@Builder
 public class DateInfo {
     @Column(name = "reg_date")
-    private Date regDate;
+    private LocalDateTime regDate;
 
     @Column(name = "mod_date")
-    private Date modDate;
+    private LocalDateTime modDate;
 
-    public DateInfo(){}
-    public DateInfo(Date regDate, Date modDate){
+    public DateInfo(LocalDateTime regDate, LocalDateTime modDate){
         this.regDate = regDate;
         this.modDate = modDate;
     }

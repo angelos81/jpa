@@ -1,7 +1,7 @@
-package com.jpa.member.model.mapper;
+package com.jpa.member.domain.mapper;
 
-import com.jpa.member.entity.Member;
-import com.jpa.member.model.MemberModel;
+import com.jpa.member.domain.entity.Member;
+import com.jpa.member.domain.model.MemberModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValueMappingStrategy;

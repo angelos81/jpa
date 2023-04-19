@@ -1,4 +1,4 @@
-package com.jpa.member.dto;
+package com.jpa.member.domain.dto;
 
 import lombok.Getter;
 import lombok.Setter;

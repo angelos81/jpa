@@ -1,7 +1,9 @@
-package com.jpa.member.model;
+package com.jpa.member.domain.model;
 
-import lombok.*;
-import net.bytebuddy.implementation.bind.annotation.BindingPriority;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -13,6 +15,4 @@ public class MemberModel {
     private String name;
 
     private String email;
-
-
 }

@@ -1,10 +1,9 @@
-package com.jpa.service;
+package com.jpa.member.service;
 
 import com.jpa.common.exception.ApiException;
 import com.jpa.constant.MemberRole;
-import com.jpa.member.entity.Member;
-import com.jpa.member.model.MemberModel;
-import com.jpa.member.service.MemberService;
+import com.jpa.member.domain.entity.Member;
+import com.jpa.member.domain.model.MemberModel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,12 +1,15 @@
-package com.jpa.member.entity;
+package com.jpa.member.domain.entity;
 
+import com.jpa.common.domain.DateInfo;
 import com.jpa.constant.MemberRole;
-import com.jpa.entity.embedded.DateInfo;
-import com.jpa.member.dto.MemberDto;
-import lombok.*;
+import com.jpa.member.domain.dto.MemberDto;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "MEMBER")
@@ -49,7 +52,7 @@ public class Member {
         member.setPassword(memberDto.getPassword());
         member.setAddress(memberDto.getAddress());
         member.setRole(MemberRole.USER);
-        member.setDateInfo(new DateInfo(new Date(), null));
+        member.setDateInfo(new DateInfo(LocalDateTime.now(), null));
 
         return member;
     }
