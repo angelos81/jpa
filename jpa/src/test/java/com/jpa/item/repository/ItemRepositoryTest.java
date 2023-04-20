@@ -44,7 +44,7 @@ class ItemRepositoryTest {
             item.setStock(randomInt);
             item.setDesc("상품 준비중 입니다.");
             item.setStatus(ItemStatus.SELL);
-            item.setRegDate(LocalDateTime.now());
+            //item.setRegDate(LocalDateTime.now());
             itemRepository.save(item);
         }
     }
@@ -59,7 +59,7 @@ class ItemRepositoryTest {
         item.setStock(99);
         item.setDesc("테스트 상품 입니다.");
         item.setStatus(ItemStatus.SELL);
-        item.setRegDate(LocalDateTime.now());
+        //item.setRegDate(LocalDateTime.now());
 
         // when
         Item resultItem = itemRepository.save(item);

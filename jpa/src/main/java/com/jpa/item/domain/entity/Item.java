@@ -2,6 +2,7 @@ package com.jpa.item.domain.entity;
 
 import com.jpa.common.domain.DateInfo;
 import com.jpa.constant.ItemStatus;
+import com.jpa.item.domain.dto.ItemDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -45,4 +46,21 @@ public class Item {
 
     @Embedded
     private DateInfo dateInfo;
+
+    /**
+     * 상품 업데이트 정보 설정
+     * @param itemDto 
+     */
+    public void updateItem(ItemDto itemDto) {
+        this.name = itemDto.getName();
+        this.price = itemDto.getPrice();
+        this.stock = itemDto.getStock();
+        this.desc = itemDto.getDesc();
+
+        if (itemDto.getStock() <= 0) {
+            this.status = ItemStatus.SOLD_OUT;
+        } else {
+            this.status = ItemStatus.SELL;
+        }
+    }
 }
