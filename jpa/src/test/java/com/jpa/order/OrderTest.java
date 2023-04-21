@@ -72,11 +72,8 @@ public class OrderTest {
             order.getOrderDetails().add(orderDetail);
         }
 
-
         return order;
     }
-
-
 
     @Test
     @DisplayName("지연로딩 테스트")

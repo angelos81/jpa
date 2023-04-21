@@ -129,6 +129,12 @@ public class ItemService {
         return itemModelList;
     }
 
+    /**
+     * 상품 목록 조회(페이징)
+     * @param itemSearchDto
+     * @param pageable
+     * @return List<ItemListModel>
+     */
     public List<ItemListModel> getItemListPage(ItemSearchDto itemSearchDto, Pageable pageable) {
         Page<ItemListModel> page = itemRepository.searchPaging(itemSearchDto, pageable);
 

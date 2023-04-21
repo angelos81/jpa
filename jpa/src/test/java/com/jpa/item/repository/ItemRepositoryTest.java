@@ -10,7 +10,6 @@ import org.springframework.test.context.TestPropertySource;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
@@ -59,14 +58,12 @@ class ItemRepositoryTest {
         item.setStock(99);
         item.setDesc("테스트 상품 입니다.");
         item.setStatus(ItemStatus.SELL);
-        //item.setRegDate(LocalDateTime.now());
 
         // when
         Item resultItem = itemRepository.save(item);
 
         // then
         assertNotNull(item.getId());
-        System.out.println("item save result -> " + resultItem.toString());
     }
 
     @Test
@@ -106,7 +103,7 @@ class ItemRepositoryTest {
     }
 
     @Test
-    @DisplayName("Item 조회 -> 상세설명 like 검색")
+    @DisplayName("Item 조회(Jpql) -> 상세설명 like 검색")
     public void findByItemDesc_test() {
         // given
         sampleData(5);

@@ -23,16 +23,22 @@ class MemberServiceTest {
     MemberService memberService;
 
 
+    public Member createMember() {
+        Member member = new Member();
+        member.setId("test");
+        member.setName("테스트");
+        member.setEmail("test@test.com");
+        member.setAddress("서울시 신림동");
+        member.setRole(MemberRole.USER);
+
+        return member;
+    }
+
     @Test
     @DisplayName("회원가입 테스트 -> 정상")
     public void saveMember_test() {
         // given
-        Member member = new Member();
-        member.setId("h001");
-        member.setName("홍길동");
-        member.setEmail("hong001@test.com");
-        member.setAddress("서울시 신림동");
-        member.setRole(MemberRole.USER);
+        Member member = createMember();
 
         // when
         MemberModel savedMember = memberService.saveMember(member);
@@ -46,18 +52,13 @@ class MemberServiceTest {
     @DisplayName("회원가입 테스트 -> 중복 회원 에러")
     public void saveMemberDup_test() {
         // given
-        Member member1 = new Member();
-        member1.setId("h001");
-        member1.setName("홍길동");
-        member1.setEmail("hong001@test.com");
-        member1.setAddress("서울시 신림동");
-        member1.setRole(MemberRole.USER);
+        Member member1 = createMember();
         memberService.saveMember(member1);
 
         Member member2 = new Member();
-        member1.setId("a0001");
-        member2.setName("가나다");
-        member2.setEmail("hong001@test.com");
+        member1.setId("test");
+        member2.setName("테스트");
+        member2.setEmail("test@test.com");
         member2.setAddress("서울시 대림동");
         member2.setRole(MemberRole.ADMIN);
 
