@@ -31,9 +31,9 @@ public class Order {
     private OrderStatus orderStatus;
 
     /**
-     * 연관 관계의 주인은 외래키가 있는 곳으로 설정
-     * 연관 관계의 주인이 외래키를 관리(등록, 수정, 삭제)
-     * 주인이 아닌 쪽은 mappedBy 속성값으로 연관 관계의 주인을 설정
+     * 연관 관계의 주인은 외래키가 있는 곳으로 설정 <br>
+     * 연관 관계의 주인이 외래키를 관리(등록, 수정, 삭제) <br>
+     * 주인이 아닌 쪽은 mappedBy 속성값으로 연관 관계의 주인을 설정 <br>
      * 주인이 아닌 쪽은 읽기만 가능
      */
     @OneToMany(mappedBy = "order")
@@ -44,4 +44,16 @@ public class Order {
 
     @Embedded
     private DateInfo dateInfo;
+
+
+    public static Order createOrder(Member member) {
+        Order order = new Order();
+        order.setMember(member);
+
+        order.setOrderStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+        order.setDateInfo(new DateInfo(LocalDateTime.now(), null));
+
+        return order;
+    }
 }

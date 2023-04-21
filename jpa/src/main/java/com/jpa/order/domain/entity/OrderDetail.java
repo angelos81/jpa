@@ -33,4 +33,24 @@ public class OrderDetail {
 
     @Embedded
     private DateInfo dateInfo;
+
+
+    /**
+     * 주문 상세 정보 생성
+     * @param item
+     * @param count
+     * @return OrderDetail
+     */
+    public static OrderDetail createOrderDetail(Order order, Item item, int count) {
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setOrder(order);
+        orderDetail.setItem(item);
+        orderDetail.setCount(count);
+        orderDetail.setPrice(item.getPrice() * count);
+
+        // 상품 재고 변경
+        item.orderStockChange(count);
+
+        return orderDetail;
+    }
 }

@@ -1,6 +1,7 @@
 package com.jpa.item.domain.entity;
 
 import com.jpa.common.domain.DateInfo;
+import com.jpa.common.exception.StockException;
 import com.jpa.constant.ItemStatus;
 import com.jpa.item.domain.dto.ItemDto;
 import lombok.Getter;
@@ -38,6 +39,7 @@ public class Item {
     @Embedded
     private DateInfo dateInfo;
 
+
     public Item(String name, Integer price, Integer stock, String desc) {
         this.name = name;
         this.price = price;
@@ -64,5 +66,19 @@ public class Item {
         }
 
         dateInfo.setModDate(LocalDateTime.now());
+    }
+
+    /**
+     * 상품 재고 변경
+     * @param count 
+     */
+    public void orderStockChange(int count) {
+        int remainStock = this.stock - count;
+        
+        if (remainStock < 0) {
+            throw new StockException("상품 재고 부족");
+        }
+
+        this.stock = remainStock;
     }
 }
