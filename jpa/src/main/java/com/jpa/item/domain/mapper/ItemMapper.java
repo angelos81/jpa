@@ -16,7 +16,6 @@ import java.util.List;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR,
         nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
 public interface ItemMapper {
-
     ItemMapper INSTANCE = Mappers.getMapper(ItemMapper.class);
 
     /**
@@ -35,7 +34,11 @@ public interface ItemMapper {
     @Mapping(target = "itemImgList", ignore = true)
     ItemModel toItemModel(Item item);
 
-
+    /**
+     * Item(List) Entity -> ItemListMode(List) 매핑
+     * @param itemList
+     * @return
+     */
     List<ItemListModel> toItemModelList(List<Item> itemList);
 
 

@@ -7,6 +7,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,11 +78,29 @@ class ItemServiceTest {
                 .build();
 
         // when
-        itemService.getItemList(itemSearchDto);
+        List list = itemService.getItemList(itemSearchDto);
 
         // then
-
-
+        assertEquals(1, list.size());
     }
 
+    @Test
+    @DisplayName("상품 목록 (페이징 처리)")
+    public void getItemListPage_test() {
+        // given
+        ItemDto itemDto = createItemDto();
+        Long itemId = itemService.saveItem(itemDto);
+        ItemSearchDto itemSearchDto = ItemSearchDto.builder()
+                .name("상품")
+                .price(10)
+                .build();
+
+        Pageable pageable = PageRequest.of(0, 5);
+
+        // when
+        List list = itemService.getItemListPage(itemSearchDto, pageable);
+
+        // then
+        assertEquals(1, list.size());
+    }
 }

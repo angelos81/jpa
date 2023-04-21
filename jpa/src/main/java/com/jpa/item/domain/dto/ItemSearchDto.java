@@ -19,4 +19,6 @@ public class ItemSearchDto {
 
     private ItemStatus status;
 
+    private int page;
+    private int pageDiv;
 }

@@ -22,7 +22,7 @@ public class ItemImgService {
      * @return Long (ItemImg.id)
      */
     public Long saveItemImg(ItemImg itemImg) {
-        /**
+        /*
          * 이미지 저장은 따로 처리 하지 않음
          */
 
@@ -33,7 +33,7 @@ public class ItemImgService {
     }
 
     public void updateItemImg(Long itemId, ItemImgDto itemImgDto) {
-        /**
+        /*
          * 영속 상태인 경우 변화가 감지되면 트랜잭션이 commit 될 때 update
          */
 

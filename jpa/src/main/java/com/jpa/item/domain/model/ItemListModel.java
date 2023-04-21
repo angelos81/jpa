@@ -1,12 +1,11 @@
 package com.jpa.item.domain.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.List;
+import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ItemListModel {
     private Long id;
 

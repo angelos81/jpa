@@ -32,6 +32,12 @@ public class Item {
 
     private String desc;
 
+    @Enumerated(EnumType.STRING)
+    private ItemStatus status;
+
+    @Embedded
+    private DateInfo dateInfo;
+
     public Item(String name, Integer price, Integer stock, String desc) {
         this.name = name;
         this.price = price;
@@ -40,12 +46,6 @@ public class Item {
         this.status = ItemStatus.SELL;
         this.dateInfo = new DateInfo(LocalDateTime.now(), null);
     }
-
-    @Enumerated(EnumType.STRING)
-    private ItemStatus status;
-
-    @Embedded
-    private DateInfo dateInfo;
 
     /**
      * 상품 업데이트 정보 설정
@@ -62,5 +62,7 @@ public class Item {
         } else {
             this.status = ItemStatus.SELL;
         }
+
+        dateInfo.setModDate(LocalDateTime.now());
     }
 }

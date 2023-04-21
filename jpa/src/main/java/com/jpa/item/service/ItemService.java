@@ -8,15 +8,17 @@ import com.jpa.item.domain.entity.Item;
 import com.jpa.item.domain.entity.ItemImg;
 import com.jpa.item.domain.mapper.ItemMapper;
 import com.jpa.item.domain.model.ItemImgModel;
+import com.jpa.item.domain.model.ItemListModel;
 import com.jpa.item.domain.model.ItemModel;
 import com.jpa.item.repository.ItemImgRepository;
 import com.jpa.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -78,8 +80,8 @@ public class ItemService {
         List<ItemImg> itemImgList = itemImgRepository.findByItemIdOrderByIdAsc(itemId);
 
         List<ItemImgModel> itemImgModels = new ArrayList<>();
-        for (ItemImg img : itemImgList) {
-            ItemImgModel imgModel = ItemMapper.INSTANCE.toItemImgModel(img);
+        for (ItemImg entity : itemImgList) {
+            ItemImgModel imgModel = ItemMapper.INSTANCE.toItemImgModel(entity);
             itemImgModels.add(imgModel);
             log.info("ItemImgModel.toString -> {}", imgModel.toString());
         }
@@ -113,6 +115,11 @@ public class ItemService {
         }
     }
 
+    /**
+     * 상품 목록 조회
+     * @param itemSearchDto 
+     * @return List
+     */
     public List getItemList(ItemSearchDto itemSearchDto) {
         List<Item> itemList = itemRepository.search(itemSearchDto);
         log.info(itemList.toString());
@@ -120,5 +127,20 @@ public class ItemService {
         List itemModelList = ItemMapper.INSTANCE.toItemModelList(itemList);
 
         return itemModelList;
+    }
+
+    public List<ItemListModel> getItemListPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+        Page<ItemListModel> page = itemRepository.searchPaging(itemSearchDto, pageable);
+
+        List<ItemListModel> itemListModels = page.getContent();
+        long totalCount = page.getTotalPages();
+
+        log.info("itemListModels -> {}", itemListModels);
+        log.info("totalCount -> {}", totalCount);
+
+        // Repository에서 Entity를 Model로 변환하기 때문에 MapStruct 처리 필요 없음
+//        List itemModelList = ItemMapper.INSTANCE.toItemModelList(itemList);
+
+        return itemListModels;
     }
 }

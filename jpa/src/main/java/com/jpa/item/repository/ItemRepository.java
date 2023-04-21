@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ItemRepository  extends JpaRepository<Item, Long>, ItemRepositoryCustom {
+public interface ItemRepository extends JpaRepository<Item, Long>, ItemRepositoryCustom {
     /**
      * name(=)으로 item 검색
      * @param name
@@ -46,5 +46,4 @@ public interface ItemRepository  extends JpaRepository<Item, Long>, ItemReposito
      */
     @Query(value = "select * from item i where i.desc like %:desc% order by item_id asc", nativeQuery = true)
     List<Item> findByItemDescNative(@Param("desc") String desc);
-
 }
