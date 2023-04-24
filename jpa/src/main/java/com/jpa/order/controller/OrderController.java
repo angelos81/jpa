@@ -2,16 +2,19 @@ package com.jpa.order.controller;
 
 
 import com.jpa.order.domain.dto.OrderDto;
+import com.jpa.order.domain.dto.OrderHistDto;
+import com.jpa.order.domain.model.OrderHistModel;
+import com.jpa.order.domain.model.OrderModel;
 import com.jpa.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -37,5 +40,23 @@ public class OrderController {
         Long orderId = orderService.saveOrder(orderDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(orderId);
+    }
+
+    /**
+     * 주문 목록 조회
+     */
+    @GetMapping("/list")
+    public Object orderHist(@RequestBody OrderHistDto orderHistDto) {
+        log.info("orderHistDto -> {}", orderHistDto.toString());
+
+        Pageable pageable = PageRequest.of(orderHistDto.getPage(), orderHistDto.getPageDiv());
+
+        Page<OrderModel> dtoPage = orderService.gerOrderList(orderHistDto.getMemberId(), pageable);
+        OrderHistModel model = OrderHistModel.builder()
+                .totalCount(dtoPage.getTotalElements())
+                .orderModels(dtoPage.getContent())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(model);
     }
 }
