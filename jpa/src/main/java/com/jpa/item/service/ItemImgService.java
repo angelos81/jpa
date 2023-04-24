@@ -1,6 +1,6 @@
 package com.jpa.item.service;
 
-import com.jpa.common.exception.ApiException;
+import com.jpa.common.exception.EntityNotFoundException;
 import com.jpa.item.domain.dto.ItemImgDto;
 import com.jpa.item.domain.entity.ItemImg;
 import com.jpa.item.repository.ItemImgRepository;
@@ -38,7 +38,7 @@ public class ItemImgService {
          */
 
         //ItemImg itemImg = itemImgRepository.findById(itemId).orElseThrow(ApiException::new);
-        ItemImg itemImg = itemImgRepository.findById(itemId).orElseThrow(() -> new ApiException("상품 이미지 정보 없음"));
+        ItemImg itemImg = itemImgRepository.findById(itemId).orElseThrow(() -> new EntityNotFoundException("상품 이미지 정보 없음"));
 
         itemImg.updateItemImg(itemImgDto.getName(), itemImgDto.getUrl());
     }

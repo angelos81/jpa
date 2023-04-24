@@ -37,6 +37,7 @@ public class OrderDetail {
 
     /**
      * 주문 상세 정보 생성
+     * @param order 
      * @param item
      * @param count
      * @return OrderDetail
@@ -49,8 +50,15 @@ public class OrderDetail {
         orderDetail.setPrice(item.getPrice() * count);
 
         // 상품 재고 변경
-        item.orderStockChange(count);
+        item.orderStockRemove(count);
 
         return orderDetail;
+    }
+
+    /**
+     * 상품 아이템 주문 취소
+     */
+    public void cancel() {
+        this.getItem().orderStockAdd(this.count);
     }
 }

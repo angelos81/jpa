@@ -1,6 +1,7 @@
 package com.jpa.order.controller;
 
 
+import com.jpa.order.domain.dto.OrderCancelDto;
 import com.jpa.order.domain.dto.OrderDto;
 import com.jpa.order.domain.dto.OrderHistDto;
 import com.jpa.order.domain.model.OrderHistModel;
@@ -58,5 +59,22 @@ public class OrderController {
                 .build();
 
         return ResponseEntity.status(HttpStatus.OK).body(model);
+    }
+
+    /**
+     * 주문 취소
+     */
+    @PutMapping("/cancel")
+    public Object cancelOrder(@Valid @RequestBody OrderCancelDto orderCancelDto, BindingResult bindingResult) {
+        log.info("orderCancelDto -> {}", orderCancelDto.toString());
+
+        if (bindingResult.hasErrors()) {
+            log.error(bindingResult.toString());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        orderService.cancelOrder(orderCancelDto.getMemberId(), orderCancelDto.getOrderId());
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT);
     }
 }

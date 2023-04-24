@@ -69,10 +69,10 @@ public class Item {
     }
 
     /**
-     * 상품 재고 변경
+     * 상품 재고 차감
      * @param count 
      */
-    public void orderStockChange(int count) {
+    public void orderStockRemove(int count) {
         int remainStock = this.stock - count;
         
         if (remainStock < 0) {
@@ -80,5 +80,13 @@ public class Item {
         }
 
         this.stock = remainStock;
+    }
+
+    /**
+     * 상품 재고 증감
+     * @param count 
+     */
+    public void orderStockAdd(int count) {
+        this.stock = this.stock + count;
     }
 }

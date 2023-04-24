@@ -46,6 +46,11 @@ public class Order {
     private DateInfo dateInfo;
 
 
+    /**
+     * 주문정보 생성
+     * @param member 
+     * @return Order
+     */
     public static Order createOrder(Member member) {
         Order order = new Order();
         order.setMember(member);
@@ -55,5 +60,17 @@ public class Order {
         order.setDateInfo(new DateInfo(LocalDateTime.now(), null));
 
         return order;
+    }
+
+    /**
+     * 주문 취소
+     */
+    public void cancelOrder() {
+        this.orderStatus = OrderStatus.CANCEL;
+        this.dateInfo.setModDate(LocalDateTime.now());
+
+        for (OrderDetail orderDetail : orderDetails) {
+            orderDetail.cancel();
+        }
     }
 }

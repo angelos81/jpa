@@ -1,6 +1,7 @@
 package com.jpa.order.service;
 
 import com.jpa.common.exception.ApiException;
+import com.jpa.common.exception.EntityNotFoundException;
 import com.jpa.item.domain.entity.Item;
 import com.jpa.item.domain.entity.ItemImg;
 import com.jpa.item.repository.ItemImgRepository;
@@ -15,6 +16,7 @@ import com.jpa.order.repository.OrderDetailRepository;
 import com.jpa.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -42,9 +44,9 @@ public class OrderService {
      */
     public Long saveOrder(OrderDto orderDto) {
         // 회원정보 조회
-        Member member = memberRepository.findById(orderDto.getMemberId()).orElseThrow(() -> new ApiException("회원 정보 없음"));
+        Member member = memberRepository.findById(orderDto.getMemberId()).orElseThrow(() -> new EntityNotFoundException("회원 정보 없음"));
 
-        Item item = itemRepository.findById(orderDto.getItemId()).orElseThrow(() -> new ApiException("상품이 존재하지 않음"));
+        Item item = itemRepository.findById(orderDto.getItemId()).orElseThrow(() -> new EntityNotFoundException("상품이 존재하지 않음"));
 
         Order order = Order.createOrder(member);
         orderRepository.save(order);
@@ -73,7 +75,11 @@ public class OrderService {
         for (Order order : orderList) {
             OrderModel orderHistDto = new OrderModel(order);
 
-            // N+1 문제 발생 -> default_batch_fetch_size로 해결
+            /*
+             * N+1 문제 해결책
+             *   1. fetch 전략을 지연 로딩으로 선택
+             *   2. fetch size 조정 (default_batch_fetch_size 설정)
+             */
             for (OrderDetail orderDetail : order.getOrderDetails()) {
                 ItemImg itemImg = itemImgRepository.findByItemIdAndRepImgYn(orderDetail.getItem().getId(), "Y");
                 if (itemImg != null) {
@@ -85,5 +91,24 @@ public class OrderService {
         }
 
         return new PageImpl<OrderModel>(orderHistList, pageable, totalCount);
+    }
+
+    /**
+     * 주문 취소
+     * @param memberId
+     * @param orderId
+     */
+    public void cancelOrder(String memberId, Long orderId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("회원 정보 없음"));
+
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new EntityNotFoundException("주문 정보 없음"));
+
+        // 로그인 유저와 주문정보의 유저가 동일한지 체크
+        if (!StringUtils.equals(member.getId(), order.getMember().getId())) {
+            throw new ApiException("주문 취소 권한 없음");
+        }
+
+        // 영속성 컨텍스트로 인해 commit 시점에 update 쿼리 실행
+        order.cancelOrder();
     }
 }
