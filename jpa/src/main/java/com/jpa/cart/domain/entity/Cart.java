@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "CART")
@@ -25,4 +26,18 @@ public class Cart {
 
     @Embedded
     private DateInfo dateInfo;
+
+
+    /**
+     * 카트 정보 생성
+     * @param member
+     * @return Cart
+     */
+    public static Cart createCart(Member member) {
+        Cart cart = new Cart();
+        cart.setMember(member);
+        cart.setDateInfo(new DateInfo(LocalDateTime.now(), null));
+
+        return cart;
+    }
 }
