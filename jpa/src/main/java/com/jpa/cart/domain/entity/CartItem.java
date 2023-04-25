@@ -58,4 +58,12 @@ public class CartItem {
     public void addCount(int count) {
         this.count += count;
     }
+
+    /**
+     * 아이템 수량 변경
+     * @param count
+     */
+    public void updateCount(int count) {
+        this.count = count;
+    }
 }
