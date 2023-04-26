@@ -3,6 +3,7 @@ package com.jpa.cart.controller;
 import com.jpa.cart.domain.dto.CartDetailDto;
 import com.jpa.cart.domain.dto.CartItemDeleteDto;
 import com.jpa.cart.domain.dto.CartItemDto;
+import com.jpa.cart.domain.dto.CartOrderDto;
 import com.jpa.cart.domain.model.CartDetailModel;
 import com.jpa.cart.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -91,5 +92,26 @@ public class CartController {
         cartService.deleteCartItem(cartItemDeleteDto);
 
         return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    /**
+     * 카트 이용 상품 주문
+     */
+    @PostMapping("/order")
+    public Object orderCartItem(@Valid @RequestBody CartOrderDto cartOrderDto, BindingResult bindingResult) {
+        log.info("cartOrderDto -> {}", cartOrderDto.toString());
+
+        if (bindingResult.hasErrors()) {
+            log.error(bindingResult.toString());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        if (cartOrderDto.getItemList().size() == 0) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
+
+        Long orderId = cartService.cartOrder(cartOrderDto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(orderId);
     }
 }

@@ -2,6 +2,7 @@ package com.jpa.cart.service;
 
 import com.jpa.cart.domain.dto.CartItemDeleteDto;
 import com.jpa.cart.domain.dto.CartItemDto;
+import com.jpa.cart.domain.dto.CartOrderDto;
 import com.jpa.cart.domain.entity.Cart;
 import com.jpa.cart.domain.entity.CartItem;
 import com.jpa.cart.domain.model.CartDetailModel;
@@ -13,6 +14,8 @@ import com.jpa.item.domain.entity.Item;
 import com.jpa.item.repository.ItemRepository;
 import com.jpa.member.domain.entity.Member;
 import com.jpa.member.repository.MemberRepository;
+import com.jpa.order.domain.dto.OrderCartDto;
+import com.jpa.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -31,6 +34,7 @@ public class CartService {
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
     private final CartItemRepository cartItemRepository;
+    private final OrderService orderService;
 
 
     /**
@@ -113,5 +117,46 @@ public class CartService {
         CartItem cartItem = cartItemRepository.findByCartIdAndItemId(cart.getId(), cartItemDeleteDto.getItemId());
 
         cartItemRepository.delete(cartItem);
+    }
+
+    /**
+     * 주문 정보 생성(카트 사용)
+     * @param cartOrderDto
+     * @return Long
+     */
+    public Long cartOrder(CartOrderDto cartOrderDto) {
+        List<OrderCartDto> orderCartDtoList = new ArrayList<>();
+
+        // 주문 정보 생성용 Dto 설정
+        for (Long cartItemId : cartOrderDto.getItemList()) {
+            CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(() -> new EntityNotFoundException("카트내 상품 정보 없음"));
+            
+            if (!cartOrderDto.getCartId().equals(cartItem.getCart().getId())) {
+                throw new ApiException("카트 권한 오류");
+            }
+
+            OrderCartDto orderCartDto = OrderCartDto.builder()
+                    .itemId(cartItem.getItem().getId())
+                    .orderCount(cartItem.getCount())
+                    .build();
+
+            orderCartDtoList.add(orderCartDto);
+        }
+
+        // 주문 정보 생성
+        Long orderId = orderService.saveOrderOfCart(orderCartDtoList, cartOrderDto.getMemberId());
+
+        // 주문 완료한 카트 아이템 삭제
+        for (Long cartItemId : cartOrderDto.getItemList()) {
+            /*
+             * 영속성 컨텍스트로 인해 아래 cartItemRepository.findById는 인해 재실행 되지 않음
+             * 주문 정보 생성용 Dto 설정 로직내에 있는 cartItemRepository.findById 결과를 그대로 사용
+             * 조회 없이 delete 쿼리 실행
+             */
+            CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(() -> new EntityNotFoundException("카트내 상품 정보 없음"));
+            cartItemRepository.delete(cartItem);
+        }
+        
+        return orderId;
     }
 }

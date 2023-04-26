@@ -8,6 +8,7 @@ import com.jpa.item.repository.ItemImgRepository;
 import com.jpa.item.repository.ItemRepository;
 import com.jpa.member.domain.entity.Member;
 import com.jpa.member.repository.MemberRepository;
+import com.jpa.order.domain.dto.OrderCartDto;
 import com.jpa.order.domain.dto.OrderDto;
 import com.jpa.order.domain.entity.Order;
 import com.jpa.order.domain.entity.OrderDetail;
@@ -110,5 +111,28 @@ public class OrderService {
 
         // 영속성 컨텍스트로 인해 commit 시점에 update 쿼리 실행
         order.cancelOrder();
+    }
+
+    /**
+     * 주문 정보 저장(카트)
+     * @param orderCartDtoList
+     * @param memberId
+     * @return Long
+     */
+    public Long saveOrderOfCart(List<OrderCartDto> orderCartDtoList, String memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("회원 정보 없음"));
+        
+        // 주문 정보 저장
+        Order order = Order.createOrder(member);
+        orderRepository.save(order);
+
+        for (OrderCartDto dto : orderCartDtoList) {
+            Item item = itemRepository.findById(dto.getItemId()).orElseThrow(() -> new EntityNotFoundException("상품 정보 없음"));
+
+            OrderDetail orderDetail = OrderDetail.createOrderDetail(order, item, dto.getOrderCount());
+            orderDetailRepository.save(orderDetail);
+        }
+
+        return order.getId();
     }
 }
