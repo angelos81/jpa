@@ -1,0 +1,633 @@
+{
+	"info": {
+		"_postman_id": "76cad403-b013-4f8b-8d1a-76b239db1ff9",
+		"name": "JPA_TEST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. 회원",
+			"item": [
+				{
+					"name": "1.1 회원저장",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"dokdo\",\n    \"name\": \"독도\",\n    \"email\": \"dokdo@test.com\",\n    \"password\": \"pkorea\",\n    \"address\": \"대한민국\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/member",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"member"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.2 회원수정",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"리라\",\n    \"email\": \"leelee@test.com\",\n    \"address\": \"대한민국 전주\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/member/lee",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"member",
+								"lee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.3 회원 목록 조회",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"hong\",\n    \"name\": \"테스\",\n    \"email\": \"test\",\n    \"address\": \"경기도\",\n    \"page\": 0,\n    \"pageDiv\": 10\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/member",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"member"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. 상품",
+			"item": [
+				{
+					"name": "2.1 상품 저장(1)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"LG_모니터\",\n    \"price\": 100000,\n    \"stock\": 100,\n    \"desc\": \"LG IPS 모니터 중고\",\n    \"itemImgList\": [\n    \t{\n    \t\t\"name\": \"이미지1\",\n    \t\t\"url\": \"http://test.tst.com/lg/img01.png\"\n    \t},\n    \t{\n    \t\t\"name\": \"이미지2\",\n    \t\t\"url\": \"http://test.tst.com/lg/img02.png\"\n    \t}\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/item",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.1 상품 저장(2)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"삼성_모니터\",\n    \"price\": 130000,\n    \"stock\": 50,\n    \"desc\": \"삼성 모니터 신품급\",\n    \"itemImgList\": [\n    \t{\n    \t\t\"name\": \"삼숑1\",\n    \t\t\"url\": \"http://test.tst.com/ss/img01.png\"\n    \t},\n    \t{\n    \t\t\"name\": \"삼숑2\",\n    \t\t\"url\": \"http://test.tst.com/ss/img02.png\"\n    \t}\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/item",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.1 상품 저장(3)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"한성_모니터\",\n    \"price\": 90000,\n    \"stock\": 230,\n    \"desc\": \"한성 모니터 A급\",\n    \"itemImgList\": [\n    \t{\n    \t\t\"name\": \"한성1\",\n    \t\t\"url\": \"http://test.hs.com/hs/AAA01.png\"\n    \t},\n    \t{\n    \t\t\"name\": \"한성2\",\n    \t\t\"url\": \"http://test.hs.com/hs/AAA02.png\"\n    \t}\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/item",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.2 상품 상세 조회",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/item/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.3 상품 수정",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 7,\r\n    \"name\": \"한성_모니터\",\r\n    \"price\": 90000,\r\n    \"stock\": 230,\r\n    \"desc\": \"한성 모니터 A급\",\r\n    \"itemImgList\": [\r\n        {\r\n            \"id\": 8,\r\n            \"name\": \"한성1\",\r\n            \"url\": \"http://test.hs.com/hs/AAA01.png\",\r\n            \"repImgYn\": \"Y\"\r\n        },\r\n        {\r\n            \"id\": 9,\r\n            \"name\": \"한성2\",\r\n            \"url\": \"http://test.hs.com/hs/AAA02.png\",\r\n            \"repImgYn\": \"N\"\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/item/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.4 상품 목록 조회",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/item/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.4 상품 목록 조회 (Page)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"모니터\",\r\n    \"price\": 100000,\r\n    \"page\": 0,\r\n    \"pageDiv\": 5\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/item/listPage",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"item",
+								"listPage"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. 카트",
+			"item": [
+				{
+					"name": "3.1 상품 추가",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"memberId\": \"lee\",\n    \"itemId\": 7,\n    \"count\": 3\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/cart",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.2 카트 상세 조회",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"memberId\": \"lee\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/cart",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.3 상품 수량 변경",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"memberId\": \"lee\",\n    \"itemId\": 1,\n    \"count\": 3\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/cart/item",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"cart",
+								"item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.4 상품 삭제",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"memberId\": \"hong\",\n    \"itemId\": 33\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/cart/item",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"cart",
+								"item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.5 상품 주문 (카트)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"memberId\": \"lee\",\r\n\t\"cartId\": 10,\r\n\t\"itemList\": [\r\n\t\t11,12,13\r\n\t]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/cart/order",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"cart",
+								"order"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4. 주문",
+			"item": [
+				{
+					"name": "4.1 상품 주문 (바로주문)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"memberId\": \"hong\",\n    \"itemId\": 33,\n    \"orderCount\": 100\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/order",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4.3 주문 목록 조회 (Page)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"memberId\": \"hong\",\r\n\t\"page\": 0,\r\n\t\"pageDiv\": 5\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/order/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4.4 주문 취소",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"memberId\": \"hong\",\r\n\t\"orderId\": 54\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/order/cancel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"order",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
