@@ -22,11 +22,7 @@ public class ItemImgService {
      * @return Long (ItemImg.id)
      */
     public Long saveItemImg(ItemImg itemImg) {
-        /*
-         * 이미지 저장은 따로 처리 하지 않음
-         */
-
-        // ITEM_IMG 정보 저장
+        // ITEM_IMG 정보 저장 (실제 이미지 저장 처리는 없음)
         itemImgRepository.save(itemImg);
 
         return itemImg.getId();
@@ -37,7 +33,6 @@ public class ItemImgService {
          * 영속 상태인 경우 변화가 감지되면 트랜잭션이 commit 될 때 update
          */
 
-        //ItemImg itemImg = itemImgRepository.findById(itemId).orElseThrow(ApiException::new);
         ItemImg itemImg = itemImgRepository.findById(itemId).orElseThrow(() -> new EntityNotFoundException("상품 이미지 정보 없음"));
 
         itemImg.updateItemImg(itemImgDto.getName(), itemImgDto.getUrl());

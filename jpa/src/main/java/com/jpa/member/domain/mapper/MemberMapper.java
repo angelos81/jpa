@@ -21,5 +21,6 @@ public interface MemberMapper {
     @Mapping(target = "id",    source = "member.id")    // 클래스.필드명 접근(허용)
     @Mapping(target = "name",  source = "name")         // 필드명 직접 접근(허용)
     @Mapping(target = "email", source = "email")
+    @Mapping(target = "address")                        // target, source 필드명이 동일한 경우 target만 지정 가능
     MemberModel entityToModel(Member member);
 }

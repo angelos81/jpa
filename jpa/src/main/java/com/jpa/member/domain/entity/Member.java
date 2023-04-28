@@ -3,6 +3,7 @@ package com.jpa.member.domain.entity;
 import com.jpa.common.domain.DateInfo;
 import com.jpa.constant.MemberRole;
 import com.jpa.member.domain.dto.MemberDto;
+import com.jpa.order.domain.entity.Order;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "MEMBER")
@@ -34,6 +37,9 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private MemberRole role;
+
+    @OneToMany(mappedBy = "member")
+    private List<Order> orderList = new ArrayList<>();
 
     @Embedded
     private DateInfo dateInfo;

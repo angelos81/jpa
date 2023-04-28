@@ -1,6 +1,6 @@
 package com.jpa.item.service;
 
-import com.jpa.common.exception.ApiException;
+import com.jpa.common.exception.EntityNotFoundException;
 import com.jpa.item.domain.dto.ItemDto;
 import com.jpa.item.domain.dto.ItemImgDto;
 import com.jpa.item.domain.dto.ItemSearchDto;
@@ -83,7 +83,8 @@ public class ItemService {
         for (ItemImg entity : itemImgList) {
             ItemImgModel imgModel = ItemMapper.INSTANCE.toItemImgModel(entity);
             itemImgModels.add(imgModel);
-            log.info("ItemImgModel.toString -> {}", imgModel.toString());
+
+            log.debug("ItemImgModel.toString -> {}", imgModel.toString());
         }
 
         Optional<Item> item = itemRepository.findById(itemId);
@@ -99,16 +100,18 @@ public class ItemService {
      */
     public void updateItemInfo(ItemDto itemDto) {
         Long itemId = itemDto.getId();
-        Item item = itemRepository.findById(itemId).orElseThrow(() -> new ApiException("상품 정보 없음"));
+        Item item = itemRepository.findById(itemId).orElseThrow(() -> new EntityNotFoundException("상품 정보 없음"));
 
-        /**
+        /*
          * 영속 상태인 경우 변화가 감지되면 트랜잭션이 commit 될 때 update
+         * 따라서 update 처리가 따로 존재하지 않음
          */
-        // 상품 정보 업데이트
+        
+        // 상품 정보 업데이트 설정
         item.updateItem(itemDto);
         //item.getDateInfo().setModDate(LocalDateTime.now());
 
-        boolean isFirstImg = true;
+        //boolean isFirstImg = true;
         List<ItemImgDto> itemImgList = itemDto.getItemImgList();
         for (ItemImgDto imgDto : itemImgList) {
             itemImgService.updateItemImg(imgDto.getId(), imgDto);
@@ -118,15 +121,12 @@ public class ItemService {
     /**
      * 상품 목록 조회
      * @param itemSearchDto 
-     * @return List
+     * @return List<ItemListModel>
      */
-    public List getItemList(ItemSearchDto itemSearchDto) {
+    public List<ItemListModel> getItemList(ItemSearchDto itemSearchDto) {
         List<Item> itemList = itemRepository.search(itemSearchDto);
-        log.info(itemList.toString());
 
-        List itemModelList = ItemMapper.INSTANCE.toItemModelList(itemList);
-
-        return itemModelList;
+        return ItemMapper.INSTANCE.toItemModelList(itemList);
     }
 
     /**
@@ -141,10 +141,10 @@ public class ItemService {
         List<ItemListModel> itemListModels = page.getContent();
         long totalCount = page.getTotalPages();
 
-        log.info("itemListModels -> {}", itemListModels);
         log.info("totalCount -> {}", totalCount);
+        log.info("itemListModels -> {}", itemListModels);
 
-        // Repository에서 Entity를 Model로 변환하기 때문에 MapStruct 처리 필요 없음
+        // Repository에서 Entity를 Model로 변환하기 때문에 MapStruct 처리 필요 없음 (Projections.bean)
 //        List itemModelList = ItemMapper.INSTANCE.toItemModelList(itemList);
 
         return itemListModels;

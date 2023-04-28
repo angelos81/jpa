@@ -1,14 +1,22 @@
 package com.jpa.member.service;
 
 import com.jpa.common.exception.ApiException;
+import com.jpa.common.exception.EntityNotFoundException;
+import com.jpa.member.domain.dto.MemberSearchDto;
+import com.jpa.member.domain.dto.MemberUpdateDto;
 import com.jpa.member.domain.entity.Member;
-import com.jpa.member.domain.model.MemberModel;
 import com.jpa.member.domain.mapper.MemberMapper;
+import com.jpa.member.domain.model.MemberListModel;
+import com.jpa.member.domain.model.MemberModel;
 import com.jpa.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Service
 @Transactional
@@ -30,11 +38,12 @@ public class MemberService {
      */
     public MemberModel saveMember(Member member) {
         // 이메일 validation
-        this.validDuplicateMember(member);
+        this.validDuplicateMember(member.getEmail());
 
         // 회원정보 저장
         Member savedMember = memberRepository.save(member);
 
+        // Entity를 리턴용 Model로 변환
         MemberModel model = MemberMapper.INSTANCE.entityToModel(savedMember);
         log.info("회원저장 데이터 -> {}", model.toString());
 
@@ -42,14 +51,44 @@ public class MemberService {
     }
 
     /**
-     * 이메일 중복 체크
-     * @param member 
+     * 회원정보 수정
+     * @param memberUpdateDto
      */
-    private void validDuplicateMember(Member member) {
-        Member findMember = memberRepository.findByEmail(member.getEmail());
+    public void updateMember(MemberUpdateDto memberUpdateDto) {
+        Member member = memberRepository.findById(memberUpdateDto.getId()).orElseThrow(() -> new EntityNotFoundException("회원 정보 없음"));
+
+        member.setName(memberUpdateDto.getName());
+        member.setEmail(memberUpdateDto.getEmail());
+        member.setAddress(memberUpdateDto.getAddress());
+        member.getDateInfo().setModDate(LocalDateTime.now());
+    }
+
+    /**
+     * 이메일 중복 체크
+     * @param email
+     */
+    private void validDuplicateMember(String email) {
+        Member findMember = memberRepository.findByEmail(email);
 
         if (findMember != null) {
             throw new ApiException("중복 가입된 회원");
         }
+    }
+
+    /**
+     * 회원 목록 조회
+     * @param memberSearchDto
+     * @param pageable
+     * @return MemberListModel
+     */
+    @Transactional(readOnly = true)
+    public MemberListModel searchMember(MemberSearchDto memberSearchDto, Pageable pageable) {
+        Page<MemberModel> modelPage = memberRepository.searchMember(memberSearchDto, pageable);
+
+        MemberListModel model = new MemberListModel();
+        model.setTotalCnt(modelPage.getTotalElements());
+        model.setMemberModelList(modelPage.getContent());
+
+        return model;
     }
 }

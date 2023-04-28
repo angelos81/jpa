@@ -56,7 +56,8 @@ public class OrderDetail {
     }
 
     /**
-     * 상품 아이템 주문 취소
+     * 상품 아이템 주문 취소 <br>
+     *   - 상품 재고 증감
      */
     public void cancel() {
         this.getItem().orderStockAdd(this.count);

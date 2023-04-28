@@ -25,7 +25,7 @@ public class CartController {
 
     @PostMapping("")
     public Object addCart(@Valid @RequestBody CartItemDto cartItemDto, BindingResult bindingResult) {
-        log.info("cartItemDto -> {}", cartItemDto.toString());
+        log.debug("cartItemDto -> {}", cartItemDto.toString());
 
         if (bindingResult.hasErrors()) {
             log.error(bindingResult.toString());
@@ -48,7 +48,7 @@ public class CartController {
      */
     @GetMapping("")
     public Object getCartInfo(@Valid @RequestBody CartDetailDto cartDetailDto, BindingResult bindingResult) {
-        log.info("cartDetailDto -> {}", cartDetailDto.toString());
+        log.debug("cartDetailDto -> {}", cartDetailDto.toString());
 
         if (bindingResult.hasErrors()) {
             log.error(bindingResult.toString());
@@ -65,7 +65,7 @@ public class CartController {
      */
     @PatchMapping(value = "/item")
     public Object updateItemCount(@Valid @RequestBody CartItemDto cartItemDto, BindingResult bindingResult) {
-        log.info("cartItemDto -> {}", cartItemDto.toString());
+        log.debug("cartItemDto -> {}", cartItemDto.toString());
 
         if (bindingResult.hasErrors()) {
             log.error(bindingResult.toString());
@@ -82,7 +82,7 @@ public class CartController {
      */
     @DeleteMapping("/item")
     public Object deleteItemCount(@Valid @RequestBody CartItemDeleteDto cartItemDeleteDto, BindingResult bindingResult) {
-        log.info("cartItemDeleteDto -> {}", cartItemDeleteDto.toString());
+        log.debug("cartItemDeleteDto -> {}", cartItemDeleteDto.toString());
 
         if (bindingResult.hasErrors()) {
             log.error(bindingResult.toString());
@@ -99,7 +99,7 @@ public class CartController {
      */
     @PostMapping("/order")
     public Object orderCartItem(@Valid @RequestBody CartOrderDto cartOrderDto, BindingResult bindingResult) {
-        log.info("cartOrderDto -> {}", cartOrderDto.toString());
+        log.debug("cartOrderDto -> {}", cartOrderDto.toString());
 
         if (bindingResult.hasErrors()) {
             log.error(bindingResult.toString());

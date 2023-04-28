@@ -31,7 +31,7 @@ public class OrderController {
      */
     @PostMapping("")
     public Object saveOrder(@Valid @RequestBody OrderDto orderDto, BindingResult bindingResult) {
-        log.info("orderDto -> {}", orderDto.toString());
+        log.debug("orderDto -> {}", orderDto.toString());
 
         if (bindingResult.hasErrors()) {
             log.error(bindingResult.toString());
@@ -48,7 +48,7 @@ public class OrderController {
      */
     @GetMapping("/list")
     public Object orderHist(@RequestBody OrderHistDto orderHistDto) {
-        log.info("orderHistDto -> {}", orderHistDto.toString());
+        log.debug("orderHistDto -> {}", orderHistDto.toString());
 
         Pageable pageable = PageRequest.of(orderHistDto.getPage(), orderHistDto.getPageDiv());
 
@@ -66,7 +66,7 @@ public class OrderController {
      */
     @PutMapping("/cancel")
     public Object cancelOrder(@Valid @RequestBody OrderCancelDto orderCancelDto, BindingResult bindingResult) {
-        log.info("orderCancelDto -> {}", orderCancelDto.toString());
+        log.debug("orderCancelDto -> {}", orderCancelDto.toString());
 
         if (bindingResult.hasErrors()) {
             log.error(bindingResult.toString());

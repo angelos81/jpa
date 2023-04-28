@@ -29,7 +29,7 @@ public class ItemController {
      */
     @PostMapping("")
     public Object saveItem(@Valid @RequestBody ItemDto itemDto, BindingResult bindingResult) {
-        log.info("itemDto -> {}", itemDto.toString());
+        log.debug("itemDto -> {}", itemDto.toString());
 
         if (bindingResult.hasErrors()) {
             log.error(bindingResult.toString());
@@ -46,7 +46,7 @@ public class ItemController {
      */
     @GetMapping(value = "/{itemId}")
     public Object getItemInfo(@PathVariable("itemId") Long itemId)  {
-        log.info("itemId -> {}", itemId);
+        log.debug("itemId -> {}", itemId);
 
         ItemModel model = itemService.getItemDetail(itemId);
 
@@ -56,9 +56,9 @@ public class ItemController {
     /**
      * 상품 정보 수정
      */
-    @PostMapping(value = "/{itemId}")
+    @PatchMapping(value = "/{itemId}")
     public Object updateItem(@Valid @RequestBody ItemDto itemDto, BindingResult bindingResult) {
-        log.info("itemDto -> {}", itemDto.toString());
+        log.debug("itemDto -> {}", itemDto.toString());
 
         if (bindingResult.hasErrors()) {
             log.error(bindingResult.toString());
@@ -75,7 +75,7 @@ public class ItemController {
      */
     @GetMapping("/list")
     public Object getItemList(@RequestBody ItemSearchDto itemSearchDto) {
-        log.info("itemSearchDto -> {}", itemSearchDto.toString());
+        log.debug("itemSearchDto -> {}", itemSearchDto.toString());
 
         List modelList = itemService.getItemList(itemSearchDto);
 
@@ -87,7 +87,7 @@ public class ItemController {
      */
     @GetMapping("/listPage")
     public Object getItemListPage(@RequestBody ItemSearchDto itemSearchDto) {
-        log.info("itemSearchDto -> {}", itemSearchDto.toString());
+        log.debug("itemSearchDto -> {}", itemSearchDto.toString());
 
         Pageable pageable = PageRequest.of(itemSearchDto.getPage(), itemSearchDto.getPageDiv());
         List<ItemListModel> modelList = itemService.getItemListPage(itemSearchDto, pageable);
