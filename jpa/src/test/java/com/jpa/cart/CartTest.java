@@ -62,7 +62,4 @@ public class CartTest {
         // then
         Assertions.assertEquals(cart.getId(), searchCart.getId());
     }
-
-
-
 }

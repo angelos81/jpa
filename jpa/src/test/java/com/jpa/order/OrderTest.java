@@ -88,5 +88,4 @@ public class OrderTest {
 
         System.out.println("Member.id -> " + orderDetail.getOrder().getMember().getId());
     }
-
 }

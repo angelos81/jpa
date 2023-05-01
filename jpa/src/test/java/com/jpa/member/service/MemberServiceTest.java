@@ -68,5 +68,4 @@ class MemberServiceTest {
         // then
         assertEquals("중복 가입된 회원", e.getMessage());
     }
-
 }
