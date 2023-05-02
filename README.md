@@ -8,10 +8,10 @@ JPA를 처음 접하는 분들을 위해 샘플 소스를 제공.
   + JDBC URL(실습용) -> jdbc:h2:tcp://localhost/~/jpa
   + JDBC URL(테스트용) -> jdbc:h2:tcp://localhost/~/test
 ### 사용 Lib
-- SpringBoot + JPA
+- SpringBoot + Spring Data JPA
 - Lombok
 - MapStruct
-- H2database
+- H2 Database
 - QueryDSL
 - commons-lang3
 
