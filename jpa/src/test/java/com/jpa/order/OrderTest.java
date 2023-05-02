@@ -2,7 +2,7 @@ package com.jpa.order;
 
 
 import com.jpa.common.domain.DateInfo;
-import com.jpa.common.exception.ApiException;
+import com.jpa.common.exception.EntityNotFoundException;
 import com.jpa.item.domain.entity.Item;
 import com.jpa.item.repository.ItemRepository;
 import com.jpa.member.domain.entity.Member;
@@ -83,7 +83,7 @@ public class OrderTest {
         em.flush();
         em.clear();
 
-        OrderDetail orderDetail = orderDetailRepository.findById(detailId).orElseThrow(() -> new ApiException("데이터 없음"));
+        OrderDetail orderDetail = orderDetailRepository.findById(detailId).orElseThrow(() -> new EntityNotFoundException("데이터 없음"));
         System.out.println("OrderDetail class -> " + orderDetail.getOrder().getClass());
 
         System.out.println("Member.id -> " + orderDetail.getOrder().getMember().getId());

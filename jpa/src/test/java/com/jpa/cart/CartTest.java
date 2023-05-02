@@ -4,7 +4,7 @@ package com.jpa.cart;
 import com.jpa.cart.domain.entity.Cart;
 import com.jpa.cart.repository.CartRepository;
 import com.jpa.common.domain.DateInfo;
-import com.jpa.common.exception.ApiException;
+import com.jpa.common.exception.EntityNotFoundException;
 import com.jpa.constant.MemberRole;
 import com.jpa.member.domain.entity.Member;
 import com.jpa.member.repository.MemberRepository;
@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @SpringBootTest
 @Transactional
@@ -57,7 +56,7 @@ public class CartTest {
         em.flush();
         em.clear();
 
-        Cart searchCart = cartRepository.findById(cart.getId()).orElseThrow(() -> new ApiException("조회 데이터 없음"));
+        Cart searchCart = cartRepository.findById(cart.getId()).orElseThrow(() -> new EntityNotFoundException("조회 데이터 없음"));
 
         // then
         Assertions.assertEquals(cart.getId(), searchCart.getId());
