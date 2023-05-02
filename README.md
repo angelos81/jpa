@@ -2,9 +2,11 @@
 JPA를 처음 접하는 분들을 위해 샘플 소스를 제공.
 
 ## 개발환경
-- JDK 11 (<https://jdk.java.net/archive>)
-- Intellij (<https://www.jetbrains.com/ko-kr/idea/download/#section=windows>)
-- H2DB (ver. 2.0.204 <https://www.h2database.com/html/download-archive.html>)
++ JDK 11 (<https://jdk.java.net/archive>)
++ Intellij (<https://www.jetbrains.com/ko-kr/idea/download/#section=windows>)
++ H2DB (ver. 2.0.204 <https://www.h2database.com/html/download-archive.html>)
+  + JDBC URL(실습용) -> jdbc:h2:tcp://localhost/~/jpa
+  + JDBC URL(테스트용) -> jdbc:h2:tcp://localhost/~/test
 ### 사용 Lib
 - SpringBoot + JPA
 - Lombok
