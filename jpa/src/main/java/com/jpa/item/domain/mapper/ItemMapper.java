@@ -40,6 +40,4 @@ public interface ItemMapper {
      * @return
      */
     List<ItemListModel> toItemModelList(List<Item> itemList);
-
-
 }
